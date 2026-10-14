@@ -19,21 +19,38 @@ def mostrar_menu():
     return opcion
 
 
+def pedir_nota(mensaje):
+    """
+    Función creada para pedirle una nota al usuario hasta que sea un número entre 0.0 y 5.0.
+    """
+    
+    while True:
+        try:
+                
+            nota = float(input(mensaje))
+            while nota < 0 or nota > 5:
+                print("Nota inválida, debe estar entre 0.0 y 5.0")
+                nota = float(input(mensaje))
+    
+            break
+    
+        except ValueError: 
+            print("Escribe solo números.")     
+                
+    return nota
+
+
 # ---------------- FUNCIONALIDADES MODO 1 -----------------
 def pedir_notas1():
     """
-    Función creada para pedir al usuario su nombre y sus notas, además verificar si se encuentran en el rango correcto
+    Función creada para pedir al usuario su nombre y sus notas.
     """
 
     nombre = input("\nIngresa tu nombre: ")
-    nota1 = float(input("Ingresa la nota 1: "))
-    nota2 = float(input("Ingresa la nota 2: "))
-    nota3 = float(input("Ingresa la nota 3: "))
-
-    if nota1 < 0 or nota1 > 5 or nota2 < 0 or nota2 > 5 or nota3 < 0 or nota3 > 5:
-        print("Error, las notas deben estar entre 0.0 y 5.0")
-    else:
-        print(f"Notas recibidas!!")
+    nota1 = pedir_nota("Ingresa la nota 1: ")
+    nota2 = pedir_nota("Ingresa la nota 2: ")
+    nota3 = pedir_nota("Ingresa la nota 3: ")
+    print("Notas recibidas!!")
 
     return nota1, nota2, nota3, nombre
 
@@ -67,19 +84,16 @@ def mostrar_estado(nota_definitiva):
 # ---------------- FUNCIONALIDADES MODO 2 --------------------
 def pedir_notas2():
     """
-    Función creada para pedir al usuario su nombre y sus notas, además verificar si se encuentran en el rango correcto
+    Función creada para pedir al usuario su nombre y sus notas
     """
-    
+
     nombre = input("\nIngresa tu nombre: ")
-    nota1 = float(input("Ingresa la nota 1: "))
-    nota2 = float(input("Ingresa la nota 2: "))
-    
-    if nota1 < 0 or nota1 > 5 or nota2 < 0 or nota2 > 5:
-        print("Error, las notas deben estar entre 0.0 y 5.0")
-    else:
-        print(f"Notas recibidas!!")
+    nota1 = pedir_nota("Ingresa la nota 1: ")
+    nota2 = pedir_nota("Ingresa la nota 2: ")
+    print("Notas recibidas!!")
     
     return nota1, nota2, nombre
+
 
 
 def nota_faltante(nota1, nota2):
@@ -114,22 +128,27 @@ def mostrar_resultado(nota_final, nombre):
 
 
 # ------------- PROGRAMA PRINCIPAL ----------------
-cabecera()
-opcion = mostrar_menu()
-
-
-if opcion == "1":
-    nota1, nota2, nota3, nombre = pedir_notas1()
-    nota_definitiva = calcular_definitiva(nota1, nota2, nota3, nombre)
-    mostrar_estado(nota_definitiva)
-
-elif opcion == "2": 
-    nota1, nota2, nombre = pedir_notas2()
-    nota_final = nota_faltante(nota1, nota2)
-    mostrar_resultado(nota_final, nombre)
-
-else:
-    print("Opción incorrecta.")
 
 
 
+def main():
+    cabecera()
+    opcion = mostrar_menu()
+
+
+    if opcion == "1":
+        nota1, nota2, nota3, nombre = pedir_notas1()
+        nota_definitiva = calcular_definitiva(nota1, nota2, nota3, nombre)
+        mostrar_estado(nota_definitiva)
+
+    elif opcion == "2": 
+        nota1, nota2, nombre = pedir_notas2()
+        nota_final = nota_faltante(nota1, nota2)
+        mostrar_resultado(nota_final, nombre)
+
+    else:
+        print("Opción incorrecta.")
+
+
+if __name__ == "__main__":
+    main()
